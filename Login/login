@@ -1,0 +1,46 @@
+#!/bin/bash
+
+banco_dados="$HOME/projetos/tcc/banco-logins"
+
+#Verificar se Dialog está instalado
+inst_dialog=$(type -P dialog)
+   if [ ! -n "$inst_dialog" ] ; then
+      echo -e "\tDialog não está instalado...
+\tInstale-o primeiramente para o programa funcionar"
+	  exit
+   fi
+
+#Loop para realização do Login
+while true ; do
+#Recebendo Login e senha do usuário
+login=$(
+	dialog --stdout --title "Login" --backtitle "Sistema de Login" --begin 2 2 \
+		   --inputbox "Digite seu login" 0 0\
+		   --and-widget \
+		   --begin 2 35 \
+		   --insecure --passwordbox "Digite sua senha" 0 0
+)
+
+user=$(echo $login | cut -d ' ' -f1)
+pass=$(echo $login | cut -d ' ' -f2)
+
+#Verificando usuário no banco de dados
+usuario=$(grep -w "$user" "$banco_dados" | cut -d: -f1)
+   if [ -n "$usuario" ] ; then
+      senha=$(grep -w "$user" "$banco_dados" | cut -d: -f2)
+
+		#Verifica se o usuário e a senha estão corretos
+	  	if [ "$usuario" = "$user" ] && [ "$senha" = "$pass" ] ; then
+			dialog --stdout --title "Login Aceito" \
+		   		   --msgbox "Login realizado com sucesso!" 5 35
+		else
+    		dialog --stdout --title "Login Incorreto" \
+		   	 	   --msgbox "Verifique seu Login e Senha" 5 35
+		fi
+		
+   else
+      dialog --stdout --title "Erro" \
+	  	     --msgbox "Login não registrado" 5 30
+   fi
+
+done
