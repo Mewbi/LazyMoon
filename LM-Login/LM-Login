@@ -1,0 +1,82 @@
+#!/bin/bash
+
+#==============================[ CABEÇALHO ]=================================|
+#  AUTOR
+#     Felipe Fernandes <felipefernandesgsc@gmail.com>
+#
+#  PROGRAMA
+#	  LM-Login
+#
+#  DATA DE CRIAÇÃO
+#     18/05/2019
+#
+#  DESCRIÇÃO
+#     Realiza o login para o acesso aos registros de arquivos de monitoramento
+#
+#  FUNCIONAMENTO
+#     O programa realiza o  login utilizando a interface gráfico "dialog", seu
+#    sistema realiza a comparação de login e senha com o banco de dados criado
+#    pelo programa LM-Management. Após o login o programa apresenta  uma sele-
+#    ção de serviços  que podem ser acessados,  seja de monitoramento de rede,
+#    seja de suporte ou de registro de usuários.
+#
+#  CHANGELOG
+#     www.github.com/Mewbi/tcc-senai/LM-Login/changelog.txt
+#============================================================================|
+
+#==============================[ VARIÁVEIS ]=================================|
+banco="banco-logins.txt"
+#============================================================================|
+
+#==============================[ TESTES ]====================================|
+#Verificar se Dialog está instalado
+inst_dialog=$(type -P dialog)
+   if [ ! -n "$inst_dialog" ] ; then
+      echo -e "\tDialog não está instalado...
+\tInstale-o primeiramente para o programa funcionar"
+	  exit
+   fi
+#============================================================================|
+
+#==============================[ INICIAL ]===================================|
+#Loop para realização do Login
+while true ; do
+#Recebendo Login e senha do usuário
+login=$(
+	dialog --stdout --title "Login" --backtitle "Sistema de Login" --begin 2 2 \
+		   --inputbox "Digite seu login" 0 0\
+		   --and-widget \
+		   --begin 2 35 \
+		   --insecure --passwordbox "Digite sua senha" 0 0
+)
+
+user=$(echo $login | cut -d ' ' -f1)
+pass=$(echo $login | cut -d ' ' -f2)
+
+
+#Verificando usuário no banco de dados
+usuario=$(grep -w "$user" "$banco" | cut -d: -f1)
+   if [ -n "$usuario" ] ; then
+
+	  #Pega a senha criptografada no banco de dados
+      senha=$(grep -w "$user" "$banco" | cut -d: -f3)
+	  #Criptografa a senha inserida
+	  salt=$(grep -w "$user" "$banco" | cut -d: -f2)
+	  pass=$(echo "${pass}${salt}" | sha256sum | awk '{print $1}')
+
+		#Verifica se o usuário e a senha estão corretos
+	  	if [ "$usuario" = "$user" ] && [ "$senha" = "$pass" ] ; then
+			dialog --stdout --title "Login Aceito" \
+		   		   --msgbox "Login realizado com sucesso!" 5 35
+		else
+    		dialog --stdout --title "Login Incorreto" \
+		   	 	   --msgbox "Verifique seu Login e Senha" 5 35
+		fi
+		
+   else
+      dialog --stdout --title "Erro" \
+	  	     --msgbox "Login não registrado" 5 30
+   fi
+
+done
+#============================================================================|

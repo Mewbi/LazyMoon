@@ -1,0 +1,7 @@
+# Changes
+
+## 1 (18/05/2019 14:22) - [ Felipe Fernandes ]
+1. Criado estrutura funcional do programa;
+2. Criado a opção de se registrar com criptografia;
+3. Criado opção que inicia o programa de login (LM-Login).
+
