@@ -11,7 +11,7 @@ apresenta  uma seleção de serviços  que podem ser acessados,  seja de monitor
 suporte ou de registro de usuários.
 
 ## Changelog
-www.github.com/Mewbi/blob/master/LM-Login/changelog.txt
+www.github.com/Mewbi/tcc-senai/blob/master/LM-Login/changelog.txt
 
 ## Autor
 Felipe Fernandes [ felipefernandesgsc@gmail.com ]
