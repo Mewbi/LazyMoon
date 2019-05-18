@@ -9,7 +9,7 @@ O programa cria e remove usuários que terão acesso aos serviços de monitorame
 também realiza o direcionamento para a sessão de login, para ter acesso a outros programas que 
 realizam a supervisão da(s) rede(s) analisada(s).
 
-## CHANGELOG
+## Changelog
 www.github.com/Mewbi/tcc-senai/LM-Managemente/changelog.txt
 
 ## Autor
