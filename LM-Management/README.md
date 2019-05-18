@@ -10,7 +10,7 @@ também realiza o direcionamento para a sessão de login, para ter acesso a outr
 realizam a supervisão da(s) rede(s) analisada(s).
 
 ## Changelog
-www.github.com/Mewbi/tcc-senai/LM-Management/changelog.txt
+www.github.com/Mewbi/tcc-senai/blob/master/LM-Management/changelog.txt
 
 ## Autor
 Felipe Fernandes [ felipefernandesgsc@gmail.com ]
