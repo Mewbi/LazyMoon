@@ -5,17 +5,17 @@
 #     Felipe Fernandes <felipefernandesgsc@gmail.com>
 #
 #  PROGRAMA
-#	  LM-Management
+#     LM-Management
 #
 #  DATA DE CRIAÇÃO
 #     18/05/2019
 #
 #  DESCRIÇÃO
-#	  Realiza o gerenciamento  de usuários para o acesso aos serviços de moni-
+#     Realiza o gerenciamento  de usuários para o acesso aos serviços de moni-
 #   toramento de redes.
 #
 #  FUNCIONAMENTO
-#	  O programa cria e remove usuários que terão acesso aos serviços de moni-
+#     O programa cria e remove usuários que terão acesso aos serviços de moni-
 #   toramento de redes, como também realiza o direcionamento para a sessão de
 #   login, para ter acesso a outros programas que realizam a supervisão da(s)
 #   rede(s) analisada(s).
@@ -33,24 +33,83 @@ banco='banco-logins.txt'
 [ ! -e "$banco" ] && > "$banco"
 #============================================================================|
 
-
 #==============================[ FUNÇÕES ]===================================|
+_LOGO()
+{
+cat << END
+╔╦╗╔═╗╔╗╔╔═╗╔═╗╔═╗	|		|
+║║║╠═╣║║║╠═╣║ ╦║╣ 	|   Bem-Vindo	|  -h ou --help para ver as opções
+╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝	|		|
+=============================================================================
 
+END
+}
+
+_HELP()
+{
+less << END
+
+ -h|--help)
+   Impreme esta lista de comandos.
+
+ -m|--manual)
+   Imprime o manual de funcionamento do programa.
+
+ -r|--registrar)
+   Realiza o registro de novos usuários no banco de dados.
+
+ -c|--checar)
+   Imprime os na tela os usuários existentes no banco de dados.
+
+ -d|--deletar)
+   Deleta usuários existentes no banco de dados.
+
+ -l|--login)
+   Inicializa o programa LM-Login.
+
+ -s|--sair)
+   Sai do programa.
+
+END
+}
+
+_MANUAL()
+{
+less << END
+
+	Funcionamento
+
+   O Programa gerencia os usuários existentes no banco de dados, que  poderão
+ter acesso ao sistema de monitoramento de redes, através do programa LM-Login.
+
+   O menu de opções de comandos permite visualizar todos os comandos existen-
+tes no programa, que  a grosso modo dará as opções de criar, checar e deletar
+usuários.
+
+   No processo de registro  de usuários é feito a  inserção da senha de  modo
+que não seja exposto na tela o que está sendo digitado. Além disso, é passado
+por uma criptografia para que exista uma maior segurança.
+
+END
+}
 #============================================================================|
 
 #==============================[ INICIAL ]===================================|
+clear
+_LOGO
 while : ; do
    read -p "Digite um comando para executar uma tarefa: " tarefa
       case $tarefa in
-	     -h|--help)
-		 echo "menu help" ;;
+	        -h|--help)
+		 _HELP ;;
 		 
 		 
 		 -m|--manual)
-		 echo "manual de uso" ;;
+		 _MANUAL ;;
 		 
 		 
 		 -r|--registrar)
+		 clear
 		 echo -e "\n\t Registro"
 		 echo -e "\nDigite o login e senha para a nova conta\n"
 		 
@@ -77,12 +136,23 @@ while : ; do
 		 #Senha=Senha+salt+hash
 	     salt=$(tr -dc _A-Z-a-z-0-9 < /dev/urandom | head -c 8; echo)
 		 senha=$(echo "${senha}${salt}" | sha256sum | awk '{print $1}')
-		 echo "${login}:${salt}:${senha}" >> "$banco" && { echo -e "\nUsuário criado com sucesso."; sleep 3;}
+		 echo "${login}:${salt}:${senha}" >> "$banco" && { echo -e "\nUsuário criado com sucesso."; sleep 2; echo}
 		 ;;
 		 
 		 
 		 -d|--deletar)
 		 echo
+		 ;;
+
+		 -c|--checar)
+		 clear
+		 usuarios=$(cut -d: -f 1 ${banco})
+		 if [ -z "$usuarios" ]
+		    then
+		    echo -e "\nNão existe nenhum usuário registrado. \n"
+			else
+			echo -e "\n\tUsuários\n\n${usuarios}\n"
+		 fi
 		 ;;
 		 
 		 -l|--login)

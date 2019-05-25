@@ -5,3 +5,8 @@
 2. Criado a opção de se registrar com criptografia;
 3. Criado opção que inicia o programa de login (LM-Login).
 
+## 2 (25/05/2019 12:52) - [ Felipe Fernandes ]
+1. Criado a opção 'help';
+2. Criado o logo para o programa;
+3. Criado o manual de funcionamento;
+4. Criado a opção de checagem de usuários;
