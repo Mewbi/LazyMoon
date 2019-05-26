@@ -26,6 +26,7 @@
 
 #==============================[ VARIÁVEIS ]=================================|
 banco="banco-logins.txt"
+caminho="$HOME/tcc-senai/"
 #============================================================================|
 
 #==============================[ TESTES ]====================================|
@@ -67,16 +68,70 @@ usuario=$(grep -w "$user" "$banco" | cut -d: -f1)
 		#Verifica se o usuário e a senha estão corretos
 	  	if [ "$usuario" = "$user" ] && [ "$senha" = "$pass" ] ; then
 			dialog --stdout --title "Login Aceito" \
-		   		   --msgbox "Login realizado com sucesso!" 5 35
+		   	       --msgbox "Login realizado com sucesso!" 5 35
+			break
 		else
     		dialog --stdout --title "Login Incorreto" \
-		   	 	   --msgbox "Verifique seu Login e Senha" 5 35
+		   	 	--msgbox "Verifique seu Login e Senha" 5 35
 		fi
 		
    else
       dialog --stdout --title "Erro" \
 	  	     --msgbox "Login não registrado" 5 30
    fi
+
+done
+
+
+#Menu de Seleção
+while : ; do
+opcao=$(dialog \
+	--stdout \
+	--menu 'Selecione uma Opção' \
+	0 0 0 \
+	LM-MRI 'Acessar Monitoramento' \
+	LM-CSerivce 'Acessar Central de Configurações de Serviços' \
+	LM-NetChat 'Acessar Chat de Suporte' \
+	LM-SSHost 'Realizar Acesso a Outras Máquinas' \
+	LM-Management 'Acessar Gerenciamento de Usuários' \
+	Contato 'Entrar em Contato com Suporte' \
+	Sair 'Sair do Programa' \
+)
+
+
+#Acessando as Opções
+case $opcao in
+
+   LM-MRI)
+   bash ${caminho}LM-MRI/monLAN.sh
+   ;;
+
+   LM-CService)
+   bash ${caminho}LM-CService/CentralConf.sh
+   ;;
+
+   LM-NetChat)
+   bash ${caminho}LM-NetChat/NetChat
+   ;;
+
+   LM-SSHost)
+   bash ${caminho}LM-SSHost/LM-SSHost
+   ;;
+
+   LM-Management)
+   bash ${caminho}LM-Management/LM-Management
+   ;;
+
+   Contato)
+   dialog \
+   --stdout --title "E-mail para contato" \
+   --msgbox "felipefernandesgsc@gmail.com" 5 40
+   ;;
+
+   Sair)
+   exit 0
+   ;;
+esac
 
 done
 #============================================================================|
