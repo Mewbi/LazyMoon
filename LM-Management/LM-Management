@@ -98,6 +98,7 @@ END
 clear
 _LOGO
 while : ; do
+
    read -p "Digite um comando para executar uma tarefa: " tarefa
       case $tarefa in
 	        -h|--help)
@@ -109,7 +110,6 @@ while : ; do
 		 
 		 
 		 -r|--registrar)
-		 clear
 		 echo -e "\n\t Registro"
 		 echo -e "\nDigite o login e senha para a nova conta\n"
 		 
@@ -134,18 +134,36 @@ while : ; do
 		 done
 	      
 		 #Senha=Senha+salt+hash
-	     salt=$(tr -dc _A-Z-a-z-0-9 < /dev/urandom | head -c 8; echo)
+	         salt=$(tr -dc _A-Z-a-z-0-9 < /dev/urandom | head -c 8; echo)
 		 senha=$(echo "${senha}${salt}" | sha256sum | awk '{print $1}')
-		 echo "${login}:${salt}:${senha}" >> "$banco" && { echo -e "\nUsuário criado com sucesso."; sleep 2; echo}
+		 echo "${login}:${salt}:${senha}" >> "$banco" && echo -e "\nUsuário criado com sucesso."; sleep 2
+		 echo
 		 ;;
 		 
-		 
 		 -d|--deletar)
-		 echo
+		 while : ; do
+		    echo
+		    lista=$(cat -n ${banco} | sed 's/\s\+/ /g' | tr : ' ' | cut -d\  -f 2,3)
+		    echo -e "\nNº Usuários\n${lista}" | column -t
+		    echo
+		    read -p "Selecione o número do usuário que será deletado: " delet
+		    confirm=$(cat -n ${banco} | head -n ${delet} | tail -n 1 | sed 's/\s\+/ /g' | tr : ' ' | cut -d ' ' -f 3)
+		    echo -e "\nO usuário ${confirm} será deletado"
+		    read -p "Tem certeza desta ação? [s/n]" confirmacao
+		    confirmacao="${confirmacao,,}"
+			if [ "$confirmacao" = "s" ] ; then
+			echo -e "\nConfirmação aprovada\nDeletando..."
+			sed -i ${delet}d ${banco} && echo -e "\nUsuário $confirm deletado com sucesso"
+			sleep 2
+			break
+			   else
+			   echo -e "\nConfirmação negada\n"
+			   break
+			fi
+		 done
 		 ;;
 
 		 -c|--checar)
-		 clear
 		 usuarios=$(cut -d: -f 1 ${banco})
 		 if [ -z "$usuarios" ]
 		    then
@@ -153,6 +171,7 @@ while : ; do
 			else
 			echo -e "\n\tUsuários\n\n${usuarios}\n"
 		 fi
+		 
 		 ;;
 		 
 		 -l|--login)

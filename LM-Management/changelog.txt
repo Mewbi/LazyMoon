@@ -9,4 +9,8 @@
 1. Criado a opção 'help';
 2. Criado o logo para o programa;
 3. Criado o manual de funcionamento;
-4. Criado a opção de checagem de usuários;
+4. Criado a opção de checagem de usuários.
+
+## 3 (25/05/2019 22:47) - [ Felipe Fernandes ]
+1. Criado a função de deletar usuários;
+2. Correção de erro no registro que impedia que pudesse ser completado.
