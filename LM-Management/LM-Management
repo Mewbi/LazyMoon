@@ -175,7 +175,7 @@ while : ; do
 		 ;;
 		 
 		 -l|--login)
-		 ./LM-Login
+		 bash LM-Login || bash $HOME/LazyMoon/LM-Login/LM-Login
 		 exit
 		 ;;
 		 
