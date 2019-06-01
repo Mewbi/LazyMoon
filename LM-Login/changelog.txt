@@ -8,3 +8,6 @@
 ## 2 (26/05/2019 11:18) - [ Felipe Fernandes ]
 1. Criado menu de seleção de programas;
 2. Redirecionamento de cada item do menu de seleções para seu respectivo programa ou informação.
+
+## 3 (01/06/2019 16:40) - [ Felipe Fernandes ]
+1. Ajustado o local de acesso ao banco de logins.
