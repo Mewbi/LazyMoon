@@ -1,4 +1,4 @@
-# SSHost
+# SSHost <img src='https://i.imgur.com/ALEMe7m.png' align='right' height='300'>
 Sistema de acesso e controle de máquinas pelo terminal dentro e fora da rede LAN.
 
 ## Data de Criação
