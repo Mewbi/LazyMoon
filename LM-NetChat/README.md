@@ -1,4 +1,4 @@
-# LM-NetChat
+# LM-NetChat <img src='https://i.imgur.com/orV0M3e.png' align='right' height='300'>
 Sistema de comunicação por chat entre dois hosts dentro de uma rede LAN via terminal.
 
 ## Data de Criação
