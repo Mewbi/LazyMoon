@@ -6,7 +6,7 @@
 #     Felipe Fernandes <felipefernandesgsc@gmail.com>
 #
 #  PROGRAMA
-#     NetChat
+#     LM-NetChat
 #
 #  DATA DE CRIAÇÃO
 #     31/12/2018
@@ -20,12 +20,7 @@
 #    no usuário Host por meio do IP do Host e pela porta definida.
 #
 #  CHANGELOG
-#     31/12/2018 - Criação de estrutura do programa; criação do menu help,
-#    função de sair, logo do programa, função de conectar em um chat, função
-#    de criar um chat e o manual de funcionamento.
-#     02/01/2018 - Adicionado teste de verificação se o programa existe na má-
-#    quina.
-#     11/01/2019 - Adicionado a função de ter um nome no chat.
+#     https://github.com/Mewbi/tcc-senai/blob/master/LM-NetChat/changelog.txt
 #
 #============================================================================|
 

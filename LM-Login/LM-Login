@@ -112,7 +112,7 @@ case $opcao in
    ;;
 
    LM-NetChat)
-   bash ${caminho}LM-NetChat/NetChat
+   bash ${caminho}LM-NetChat/LM-NetChat
    ;;
 
    LM-SSHost)

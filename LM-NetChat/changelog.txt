@@ -1,0 +1,16 @@
+# Changes
+
+## 1 (31/12/2018) - [ Felipe Fernandes ]
+1. Criação da estrutura do programa;
+2. Adicionado menu help;
+3. Adicionado função de sair;
+4. Adicionado logo do programa;
+5. Adicionado função de conectar em um chat;
+6. Adicionado função de criar um chat;
+7. Adicionado manual de funcionamento.
+
+## 2 (02/01/2018) - [ Felipe Fernandes ]
+1. Adicionado teste de verificação se o programa existe na máquina.
+
+## 3 (11/01/2019) - [ Felipe Fernandes ]
+1. Adicionado a função de ter um nome (nickname) no chat.
