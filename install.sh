@@ -121,6 +121,6 @@ else
 	echo -e "Netcat - [\033[1;32mInstalado\033[0m]"
 fi
 
-echo -e "\nCaso algum programa não esteja instalado, instale-o para total funcionamento da geração de relatórios"
+echo -e "\nCaso algum programa não esteja instalado, instale-o para total funcionamento total dos programas"
 read -p "Pressione ENTER para prosseguir"
 #------------------------------------------------
