@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+#---------------Instalador Cliente--------------#
+#
+#  AUTOR
+#     Felipe Fernandes
+#		<felipefernandesgsc@gmail.com>
+#
+#  PROGRAMA
+#	  install.sh
+#
+#  DATA DE CRIAÇÃO
+#     09/07/2019
+#
+#  DESCRIÇÃO
+#	  Realiza a instação do programa na máquina
+#   cliente.
+#-----------------------------------------------#
+
 #---------------Verificando Permissão de Execução
 cat << END
 
@@ -39,7 +56,7 @@ if [ ! -e /home/${user}/LM-relatorio/config.txt ]; then
 	read -p "Digite o nome ou função deste server (ex. Câmeras): " name
 	read -p "Digite o usuário de envio dos relatórios: " username
 	read -p "Digite o IP de envio dos relatórios: " ip
-	read -p "Digite o diretório para envio dos relatórios: " dir
+	read -p "Digite o diretório para envio dos relatórios (Recomenda-se: /home/${username}/Lazymoon/Relatorios): " dir
 	cat > /home/${user}/LM-relatorio/config.txt << END
 ### Arquivo de Configuração ###
 #                             #
@@ -65,9 +82,9 @@ read -p "Pressione ENTER para prosseguir"
 #------------------------Checagem de Dependências
 # cron, scp, top, uname, uptime, df
 if [ ! -n "$(type -P cron )" ]; then
-	echo -e "Cron - [\033[1;31mNão Instalado\033[0m]"
+	echo -e "\nCron - [\033[1;31mNão Instalado\033[0m]"
 else
-	echo -e "Cron - [\033[1;32mInstalado\033[0m]"
+	echo -e "\nCron - [\033[1;32mInstalado\033[0m]"
 fi
 
 if [ ! -n "$(type -P scp )" ]; then

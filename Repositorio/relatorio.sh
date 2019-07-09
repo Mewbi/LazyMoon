@@ -24,7 +24,7 @@ cpuUsage=$(top -b -n2 -d 1 | awk "/^top/{i++}i==2" | grep -Ei "cpu\(s\)\s*:" | c
 
 #--------------------------------Creating Reports
 date=$(date "+%d-%m-%Y-[%H:%M]")
-name="relatorio-${date}"
+name="relatorio-${serverName}-${date}"
 cat >> ${name}.txt << END
 
 	Server: ${serverName}

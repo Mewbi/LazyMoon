@@ -25,11 +25,6 @@
 #
 #============================================================================|
 
-#==============================[ VARIÁVEIS ]=================================|
-banco="$HOME/LazyMoon/Biblioteca/banco-logins.txt"
-caminho="$HOME/LazyMoon/"
-#============================================================================|
-
 #==============================[ TESTES ]====================================|
 #Verificar se Dialog está instalado
 inst_dialog=$(type -P dialog)
@@ -38,6 +33,36 @@ inst_dialog=$(type -P dialog)
 \tInstale-o primeiramente para o programa funcionar"
 	  exit
    fi
+
+#Verifica se o programa foi executado como root ou sudo
+if [ "$(whoami)" = "root" ]; then
+   echo -e "\nO programa foi executado com o usuário Root.\n"
+      while : ; do
+      read -p "Informe o usuário em que o programa foi instalado: " usr
+      check=$(cut -d: -f 1 /etc/passwd | grep -o "$usr")
+         if [ ! -n "${check}" ]; then
+            echo -e "\nUsuário não registrado no sistema...\n"
+            continue
+         else
+            break
+         fi
+      done
+else
+   echo -e "\nO programa foi executado utilizando o Sudo? [s/n]"
+   read check
+   check="${check,,}"
+   if [ "${check}" != "s" ]; then
+      echo -e "\nO programa necessita ser executado utilizando o Sudo para que todas funções funcionem corretamente"
+      exit
+   else
+      usr="$(whoami)"
+   fi
+fi
+#============================================================================|
+
+#==============================[ VARIÁVEIS ]=================================|
+banco="/home/${usr}/LazyMoon/Biblioteca/banco-logins.txt"
+caminho="/home/${usr}/LazyMoon/"
 #============================================================================|
 
 #==============================[ INICIAL ]===================================|
@@ -104,7 +129,7 @@ opcao=$(dialog \
 case $opcao in
 
    LM-MRI)
-   bash ${caminho}LM-MRI/monLAN.sh
+   bash ${caminho}LM-MRI/LM-MRI ${usr}
    ;;
 
    LM-CService)
