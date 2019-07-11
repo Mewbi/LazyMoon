@@ -73,4 +73,9 @@ END
 #------------------------------------------------
 
 #---------------------------------Sending Reports
+scp ${name}.txt ${user}@${ip}:${dir}
+scp ${name}.html ${user}@${ip}:${dir}
+
+mv ${name}.txt $HOME/LM-relatorio
+mv ${name}.html $HOME/LM-relatorio
 #------------------------------------------------

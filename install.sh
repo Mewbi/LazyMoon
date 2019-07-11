@@ -124,3 +124,25 @@ fi
 echo -e "\nCaso algum programa não esteja instalado, instale-o para total funcionamento total dos programas"
 read -p "Pressione ENTER para prosseguir"
 #------------------------------------------------
+
+#-------Configuração de Recebimento de Relatórios
+cat << END
+
+	Configuração de Recebimento de Relatórios
+
+É necessário editar (como root) o arquivo:
+		/etc/ssh/sshd_config
+
+Basta procurar as seguintes linhas, descomenta-las e edita-las da maneira seguinte:
+END
+
+echo -e "\033[1;37;40m
+RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile      %h/.ssh/authorized_keys
+\033[0m
+
+Feito isso o programa estará apto para receber relatórios."
+#------------------------------------------------
+
+echo -e "\n\nInstalação Finalizada"

@@ -35,8 +35,8 @@ fi
 
 #-----Selecionando em qual usuário será instalado
 while : ; do
-	read -p "Digite o usuário que será realizado a instalação deste serviço: " user
-	check=$(cut -d: -f 1 /etc/passwd | grep -o "$user")
+	read -p "Digite o usuário que será realizado a instalação deste serviço: " usr
+	check=$(cut -d: -f 1 /etc/passwd | grep -o "$usr")
 	if [ ! -n "${check}" ]; then
 		echo -e "\nUsuário não registrado no sistema...\n"
 		continue
@@ -47,17 +47,17 @@ done
 #------------------------------------------------
 
 #------------------Criando arquivos de instalação
-if [ ! -d /home/${user}/LM-relatorio ]; then
-	mkdir /home/${user}/LM-relatorio || { echo -e "\nNão foi possível criar diretório para instalação" ; exit ;}
+if [ ! -d /home/${usr}/LM-relatorio ]; then
+	mkdir /home/${usr}/LM-relatorio || { echo -e "\nNão foi possível criar diretório para instalação" ; exit ;}
 fi
 
-if [ ! -e /home/${user}/LM-relatorio/config.txt ]; then
-	touch /home/${user}/LM-relatorio/config.txt || { echo -e "\nNão foi possível criar arquivo de configuração" ; exit ;}
+if [ ! -e /home/${usr}/LM-relatorio/config.txt ]; then
+	touch /home/${usr}/LM-relatorio/config.txt || { echo -e "\nNão foi possível criar arquivo de configuração" ; exit ;}
 	read -p "Digite o nome ou função deste server (ex. Câmeras): " name
 	read -p "Digite o usuário de envio dos relatórios: " username
 	read -p "Digite o IP de envio dos relatórios: " ip
-	read -p "Digite o diretório para envio dos relatórios (Recomenda-se: /home/${username}/Lazymoon/Relatorios): " dir
-	cat > /home/${user}/LM-relatorio/config.txt << END
+	read -p "Digite o diretório para envio dos relatórios (Recomenda-se: /home/${username}/Lazymoon/Relatorios/${name}): " dir
+	cat > /home/${usr}/LM-relatorio/config.txt << END
 ### Arquivo de Configuração ###
 #                             #
 # As variáveis podem ser modi-#
@@ -75,7 +75,7 @@ dir="${dir}"
 END
 fi
 
-echo -e "\nArquivo de configuração criado em /home/${user}/LM-relatorio/config.txt"
+echo -e "\nArquivo de configuração criado em /home/${usr}/LM-relatorio/config.txt"
 read -p "Pressione ENTER para prosseguir"
 #------------------------------------------------
 
@@ -121,8 +121,45 @@ echo -e "\nCaso algum programa não esteja instalado, instale-o para total funci
 read -p "Pressione ENTER para prosseguir"
 #------------------------------------------------
 
+#-------------Configuração de Envio de Relatórios
+if [ -n "$(type -P ssh)"]; then
+
+	echo -e "\n\tConfiguração de Envio de Relatórios
+É necessário gerar uma chave de autenticação, para os envios ocorrerem automaticamente.
+Será gerado uma chave RSA e será feito algumas perguntas de configuração.
+\nDigite '/home/${usr}/.ssh/id_rsa
+Para senha e confirmação de senha apenas aperte ENTER\n"
+
+	ssh-keygen -t rsa
+
+	echo -e "\nEnviando chave para ${username}, será necessário digitar a senha deste usuário\n"
+	cat /home/{usr}/.ssh/id_rsa.pub | ssh ${username}@${ip} "cat - >> /home/${username}/.ssh/authorized_keys"
+
+	echo -e "\nCriando diretório para armazenamento de relatórios na máquina que receberá os relatórios (será necessário digitar a senha de ${username} novamente)."
+	ssh {username}@{ip} "mkdir ${dir}"
+
+	cat << END
+
+	Configuração Finais para envio de Relatórios
+
+É necessário editar (como root) o arquivo:
+		/etc/ssh/ssh_config
+
+Basta procurar as seguintes linhas e descomenta-las:
+END
+
+	echo -e "\033[1;37;40m
+IdentityFile ~/.ssh/identity
+IdentityFile ~/.ssh/id_rsa
+IdentityFile ~/.ssh/id_dsa 
+\033[0m
+
+Feito isso o programa estará apto para enviar relatórios automaticamente."
+fi
+#------------------------------------------------
+
 #----------------Preparação de ativação periódica
-#chmod +x relatorio.sh
-#mv relatorio.sh /usr/bin/relatorio.sh
-#echo "00-59/10 * * * * ${user} bash /usr/bin/relatorio.sh" >> /etc/crontab
+chmod +x relatorio.sh
+mv relatorio.sh /usr/bin/relatorio.sh
+echo "00-59/10 * * * * ${usr} bash /usr/bin/relatorio.sh" >> /etc/crontab
 #------------------------------------------------
