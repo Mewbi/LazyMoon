@@ -23,7 +23,7 @@ cpuUsage=$(top -b -n2 -d 1 | awk "/^top/{i++}i==2" | grep -Ei "cpu\(s\)\s*:" | c
 #------------------------------------------------
 
 #--------------------------------Creating Reports
-date=$(date "+%d-%m-%Y-[%H:%M]")
+date=$(date "+%d-%m-%Y-[%Hh%Mm]")
 name="relatorio-${serverName}-${date}"
 cat >> ${name}.txt << END
 
@@ -73,9 +73,9 @@ END
 #------------------------------------------------
 
 #---------------------------------Sending Reports
-scp ${name}.txt ${user}@${ip}:${dir}
-scp ${name}.html ${user}@${ip}:${dir}
+scp ${name}.txt ${path}
+scp ${name}.html ${path}
 
-mv ${name}.txt $HOME/LM-relatorio
-mv ${name}.html $HOME/LM-relatorio
+mv ${name}.txt LM-relatorio
+mv ${name}.html LM-relatorio
 #------------------------------------------------

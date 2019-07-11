@@ -49,6 +49,7 @@ done
 #------------------Criando arquivos de instalação
 if [ ! -d /home/${usr}/LM-relatorio ]; then
 	mkdir /home/${usr}/LM-relatorio || { echo -e "\nNão foi possível criar diretório para instalação" ; exit ;}
+	chmod 777 /home/${usr}/LM-relatorio
 fi
 
 if [ ! -e /home/${usr}/LM-relatorio/config.txt ]; then
@@ -56,7 +57,7 @@ if [ ! -e /home/${usr}/LM-relatorio/config.txt ]; then
 	read -p "Digite o nome ou função deste server (ex. Câmeras): " name
 	read -p "Digite o usuário de envio dos relatórios: " username
 	read -p "Digite o IP de envio dos relatórios: " ip
-	read -p "Digite o diretório para envio dos relatórios (Recomenda-se: /home/${username}/Lazymoon/Relatorios/${name}): " dir
+	read -p "Digite o diretório para envio dos relatórios (Recomenda-se: /home/${username}/LazyMoon/Relatorios/${name}): " dir
 	cat > /home/${usr}/LM-relatorio/config.txt << END
 ### Arquivo de Configuração ###
 #                             #
@@ -73,6 +74,10 @@ user="${username}"
 ip="${ip}"
 dir="${dir}"
 END
+	else 
+	source /home/${usr}/LM-relatorio/config.txt
+	name="${serverName}"
+	username="${user}"
 fi
 
 echo -e "\nArquivo de configuração criado em /home/${usr}/LM-relatorio/config.txt"
@@ -122,21 +127,23 @@ read -p "Pressione ENTER para prosseguir"
 #------------------------------------------------
 
 #-------------Configuração de Envio de Relatórios
-if [ -n "$(type -P ssh)"]; then
+if [ -n "$(type -P ssh)" ]; then
 
 	echo -e "\n\tConfiguração de Envio de Relatórios
 É necessário gerar uma chave de autenticação, para os envios ocorrerem automaticamente.
 Será gerado uma chave RSA e será feito algumas perguntas de configuração.
-\nDigite '/home/${usr}/.ssh/id_rsa
+\nDigite '/home/${usr}/.ssh/id_rsa'
 Para senha e confirmação de senha apenas aperte ENTER\n"
 
 	ssh-keygen -t rsa
+	chmod 777 /home/${usr}/.ssh/id_rsa
+	chmod 777 /home/${usr}/.ssh/id_rsa.pub
 
 	echo -e "\nEnviando chave para ${username}, será necessário digitar a senha deste usuário\n"
-	cat /home/{usr}/.ssh/id_rsa.pub | ssh ${username}@${ip} "cat - >> /home/${username}/.ssh/authorized_keys"
+	cat /home/${usr}/.ssh/id_rsa.pub | ssh ${username}@${ip} "cat - >> /home/${username}/.ssh/authorized_keys"
 
 	echo -e "\nCriando diretório para armazenamento de relatórios na máquina que receberá os relatórios (será necessário digitar a senha de ${username} novamente)."
-	ssh {username}@{ip} "mkdir ${dir}"
+	ssh ${username}@${ip} "mkdir ${dir}"
 
 	cat << END
 
