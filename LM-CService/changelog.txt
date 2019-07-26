@@ -1,0 +1,4 @@
+CService
+
+# (26/07/2019) - Gabriel Viana
+Inicio rescrita do script em modo modular - versão 1.0 CService em Dialog
