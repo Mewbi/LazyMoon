@@ -95,18 +95,21 @@ less << END
 
  -m|--monitorar)
  	Inicia o monitoramento dos dispositivos registrados.
+
+ -v|--vasculhar)
+ 	Realiza o vasculhamento de IPs ativos na rede.
 	
  -rr|--registrar-rede)
  	Registra uma rede.
+
+ -dr|--deletar-rede)
+ 	Deleta uma rede do registro de redes.
 
  -cr|--checar-rede)
  	Imprime na tela as redes registradas.
 
  -mr|--monitorar-rede)
  	Inicia o monitoramentos da rede selecionada.
-
- -dr|--deletar-rede)
- 	Deleta uma rede do registro de redes.
 
  -s|--sair)
 	Sai do programa.
@@ -190,6 +193,8 @@ END
 			confirmdel="0"
 		  ;;
 		  
+
+		  #Função com problema, não termina o vasculhamento
 		  -v|--vasculhar)
 			echo "Qual a rede será vasculhada?"
 			read ip_rede
@@ -233,6 +238,13 @@ END
 
 				   #mostra o ip atual que sera usado para o teste
 				   ping -c 1 -w 1 ${ipatual} 1> /dev/null 2> /dev/null && {
+				   	#Provável que esta linha esta em redundância
+				   	#Pois esta fazendo isso:
+				   	#IP:192.168.0.1 Status:$
+					#IP:192.168.0.1 Status:ATIVO$
+					#IP:192.168.0.10 Status:$
+					#IP:192.168.0.10 Status:ATIVO$
+
 				   echo -e "IP:${ipatual} Status:$ATIVO$" \
 				   >> ${path}/Biblioteca/Redes/${ip_rede}.txt; echo -e "IP:${ciano}${ipatual}${corpadrao} Status:${verde}ATIVO${corpadrao}"; echo -e "IP:${ipatual} Status:ATIVO$" >> ${path}/Biblioteca/Redes/${ip_rede}.txt
 				   }
@@ -318,6 +330,7 @@ END
 			  
 			  while : #Entra em um loop que faz o teste completo infinitas vezes
 		  	  do
+		  	  	ipatual=$ipinicial
 		        echo -e "${ciano}Monitorando${corpadrao}" > ${path}/Biblioteca/Redes/cache-rede.txt #Esvazia o cache do monitoramento de rede.
 				 
 				 until [ "$ipatual" = "$ipfinal" ] ; do #entra no loop
