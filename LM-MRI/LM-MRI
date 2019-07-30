@@ -118,6 +118,7 @@ END
 #=========================================INICIAL
   _LOGO
    read tarefa
+   tarefa=${tarefa,,}
 
       until [ $tarefa = "--sair" ] 2> /dev/null || [ $tarefa = "-s" ] 2> /dev/null ; do
 	  
@@ -173,6 +174,90 @@ END
 		  sleep 5
 		  done
 		  ;;
+
+		  -d|--deletar)
+		 	until [ "$confirmdel" = "s" ] ; do
+			    tabela=$(cat -n ${path}/Biblioteca/Redes/registro.txt | sed 's/\s\+/ /g' | tr : ' ' | cut -d ' ' -f2,4,6)
+			    echo -e "Listagem:\n ${vermelho}Número ${verde}Dispositivos ${ciano}IPs${corpadrao}\n${tabela}" | column -t
+		 	    echo -e "\nEscolha o dispositivo a ser ${vermelho}DELETADO${corpadrao}:"
+		 	      read delete
+				excluido=$(cat -n ${path}/Biblioteca/Redes/registro.txt | head -n ${delete} | tail -n 1 | sed 's/\s\+/ /g' | tr : ' ' | cut -d ' ' -f 4 | tr a-z A-Z)
+				echo -e "O dispositivo: ${vermelho}${excluido}${corpadrao} deve ser ${vermelho}EXCLUÍDO${corpadrao}? [s/n]"
+				read confirmdel
+			done
+				sed -i ${delete}d ${path}/Biblioteca/Redes/registro.txt 
+			    echo -e "O ${vermelho}${excluido}${corpadrao} foi DELETADO! \n" && sleep 4 && clear && _LOGO && echo "Digite a próxima tarefa:"
+			confirmdel="0"
+		  ;;
+		  
+		  -v|--vasculhar)
+			echo "Qual a rede será vasculhada?"
+			read ip_rede
+			echo -e "\nA rede: ${vermelho}${ip_rede}${corpadrao} está sendo vasculhada! Este processo pode DEMORAR"
+			octeto1=$(echo "$ip_rede" | cut -d. -f1)
+			octeto2=$(echo "$ip_rede" | cut -d. -f2)
+			octeto3=$(echo "$ip_rede" | cut -d. -f3)
+			octeto4=$(echo "$ip_rede" | cut -d. -f4)
+			eval "octeto4=\$((octeto4 + 1))"
+			ipinicial=$(echo "${octeto1}.${octeto2}.${octeto3}.${octeto4}")
+			eval "octeto4=\$((octeto4 + 253))"
+			if [ $octeto3 = "0" ]
+			 then
+			 eval "octeto3=\$((octeto3 + 255))"
+			fi
+			if [ $octeto2 = "0" ]
+			 then
+			 eval "octeto2=\$((octeto2 + 255))"
+			fi
+
+			ipatual=$ipinicial
+			ipfinal=$(echo "${octeto1}.${octeto2}.${octeto3}.${octeto4}")			
+
+			#separa cada parte do ip
+			part1=$(echo "$ipatual" | cut -d. -f 1)
+			part2=$(echo "$ipatual" | cut -d. -f 2)
+			part3=$(echo "$ipatual" | cut -d. -f 3)
+			part4=$(echo "$ipatual" | cut -d. -f 4)
+
+
+				until [ "$ipatual" = "$ipfinal" ] ; do #entra no loop
+
+				   #atualiza o valor do ip atual
+				   ipatual=$(echo "${part1}.${part2}.${part3}.${part4}")
+
+				   #separa cada parte do ip
+				   part1=$(echo "$ipatual" | cut -d. -f 1)
+				   part2=$(echo "$ipatual" | cut -d. -f 2)
+				   part3=$(echo "$ipatual" | cut -d. -f 3)
+				   part4=$(echo "$ipatual" | cut -d. -f 4)
+
+				   #mostra o ip atual que sera usado para o teste
+				   ping -c 1 -w 1 ${ipatual} 1> /dev/null 2> /dev/null && {
+				   echo -e "IP:${ipatual} Status:$ATIVO$" \
+				   >> ${path}/Biblioteca/Redes/${ip_rede}.txt; echo -e "IP:${ciano}${ipatual}${corpadrao} Status:${verde}ATIVO${corpadrao}"; echo -e "IP:${ipatual} Status:ATIVO$" >> ${path}/Biblioteca/Redes/${ip_rede}.txt
+				   }
+
+				   #aumenta o ip
+				   eval "part4=\$((part4 + 1))"
+
+
+					#aumenta outro numero la tlg
+					if [ "$part4" = 255 ]
+					  then
+					  part4=$(echo "1")
+					  eval "part3=\$((part3 + 1))"
+					fi
+
+					if [ "$part3" = 256 ]
+					  then
+					  part3=$(echo "1")
+					  eval "part2=\$((part2 + 1))"
+					fi
+
+				done
+				 ipativos=$(cat -n /$HOME/Documentos/${ip_rede}.txt | sed 's/\s\+/ /g' | cut -d ' ' -f 2 )
+					echo -e "Varredura finalizada! Foi encontrado ${verde}${ipativos}${corpadrao} IPs Ativos! \n Os IPs foram salvos em um aquivo de texto na pasta Documentos! \n\n Escolha a próxima tarefa:"
+	 		;;
 		  
 		  -rr|--registrar-rede) #Realiza o registro dos dispositivos
 		    _LOGO

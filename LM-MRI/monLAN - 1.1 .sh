@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 #=============================CABEÇALHO======================================|
@@ -255,7 +254,7 @@ END
 					fi
 
 				done
-				 ipativos=$(cat -n /$HOME/Documentos/$(ip_rede}.txt | sed 's/\s\+/ /g' | cut -d ' ' -f 2 )
+				 ipativos=$(cat -n /$HOME/Documentos/${ip_rede}.txt | sed 's/\s\+/ /g' | cut -d ' ' -f 2 )
 					echo -e "Varredura finalizada! Foi encontrado ${verde}${ipativos}${corpadrao} IPs Ativos! \n Os IPs foram salvos em um aquivo de texto na pasta Documentos! \n\n Escolha a próxima tarefa:"
 	 		;;
 
