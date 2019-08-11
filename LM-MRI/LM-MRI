@@ -4,6 +4,7 @@
 #
 #  AUTOR
 #     Felipe Fernandes <felipefernandesgsc@gmail.com>
+#     Gabriel Viana <4463gabriel@gmail.com>
 #
 #  PROGRAMA
 #	  LM-MRI
@@ -173,6 +174,7 @@ END
 			  _LOGO ; cat ${path}/Biblioteca/Redes/cache.txt | column -t
 			  eval "loop=\$((loop + 1))"
 			  done
+		  rm ${path}/Biblioteca/Redes/cache.txt
 		  echo -e "\nReiniciando Testes..."
 		  sleep 5
 		  done
@@ -268,7 +270,7 @@ END
 
 				done
 				 ipativos=$(cat -n /$HOME/Documentos/${ip_rede}.txt | sed 's/\s\+/ /g' | cut -d ' ' -f 2 )
-					echo -e "Varredura finalizada! Foi encontrado ${verde}${ipativos}${corpadrao} IPs Ativos! \n Os IPs foram salvos em um aquivo de texto na pasta Documentos! \n\n Escolha a próxima tarefa:"
+				 echo -e "Varredura finalizada! Foi encontrado ${verde}${ipativos}${corpadrao} IPs Ativos! \n Os IPs foram salvos em um aquivo de texto na pasta Documentos! \n\n Escolha a próxima tarefa:"
 	 		;;
 		  
 		  -rr|--registrar-rede) #Realiza o registro dos dispositivos
@@ -292,6 +294,22 @@ END
 		  _LOGO
 		  tabela=`cut -d: -f 2,4,6 ${path}/Biblioteca/Redes/registro-rede.txt | tr -t : \  | column -t`
 		  echo -e "${vermelho}\nRede ${ciano}IP-Inicial IP-Final${corpadrao} \n${tabela}" | column -t && echo -e "\nChecagem realizada. Digite a próxima tarefa: \n"
+		  ;;
+
+		  -dr|--deletar-rede)
+		 	until [ "$confirmdel" = "s" ] ; do
+			    tabela=$(cat -n ${path}/Biblioteca/Redes/registro-rede.txt | sed 's/\s\+/ /g' | tr : ' ' | cut -d ' ' -f 2,4,6,8)
+			    tabela=$(echo -e "Listagem:\n ${vermelho}Número ${verde}Rede ${ciano}IP-Inicial IP-Final${corpadrao}\n${tabela}")
+			    echo "$tabela" | column -t
+		 	    echo -e "\nEscolha o dispositivo a ser ${vermelho}DELETADO${corpadrao}:"
+		 	      read delete
+				excluido=$(cat -n ${path}/Biblioteca/Redes/registro-rede.txt | head -n ${delete} | tail -n 1 | sed 's/\s\+/ /g' | tr : ' ' | cut -d ' ' -f 4 | tr a-z A-Z)
+				echo -e "A rede: ${vermelho}${excluido}${corpadrao} deve ser ${vermelho}EXCLUÍDA${corpadrao}? [s/n]"
+				read confirmdel
+			done
+				sed -i ${delete}d ${path}/Biblioteca/Redes/registro-rede.txt 
+			    echo -e "A rede ${vermelho}${excluido}${corpadrao} foi DELETADO! \n" && sleep 4 && _LOGO
+			confirmdel="0"
 		  ;;
 
 		  -mr|--monitorar-rede)
@@ -330,7 +348,15 @@ END
 			  
 			  while : #Entra em um loop que faz o teste completo infinitas vezes
 		  	  do
+		  	  	ipinicial=$(cat ${path}/Biblioteca/Redes/registro-rede.txt | grep -n ^| grep ^${rede_monitorada} | cut -d: -f 5)
+			  	ipfinal=$(cat ${path}/Biblioteca/Redes/registro-rede.txt | grep -n ^| grep ^${rede_monitorada} | cut -d: -f 7)
 		  	  	ipatual=$ipinicial
+
+		  	  	part1=$(echo "$ipatual" | cut -d. -f 1)
+			  	part2=$(echo "$ipatual" | cut -d. -f 2)
+			  	part3=$(echo "$ipatual" | cut -d. -f 3)
+			  	part4=$(echo "$ipatual" | cut -d. -f 4)
+
 		        echo -e "${ciano}Monitorando${corpadrao}" > ${path}/Biblioteca/Redes/cache-rede.txt #Esvazia o cache do monitoramento de rede.
 				 
 				 until [ "$ipatual" = "$ipfinal" ] ; do #entra no loop
@@ -348,8 +374,7 @@ END
    					ping -c 1 -W 1 ${ipatual} 1> /dev/null 2> /dev/null && \
 			  		echo -e "IP:${ciano}${ipatual}${corpadrao} Status:${verde}Conectado${corpadrao}" \
 			  		>> ${path}/Biblioteca/Redes/cache-rede.txt || \
-			  		${omitir}echo -e "IP:${ciano}${ipatual}${corpadrao} Status:${vermelho}Sem-Conexão${corpadrao}" \
-			  	    >> ${path}/Biblioteca/Redes/cache-rede.txt
+			  		${omitir}echo -e "IP:${ciano}${ipatual}${corpadrao} Status:${vermelho}Sem-Conexão${corpadrao}" >> ${path}/Biblioteca/Redes/cache-rede.txt
 			  		#Imprime na tela as informações do cache
 			  		_LOGO ; cat ${path}/Biblioteca/Redes/cache-rede.txt | column -t
 
@@ -370,6 +395,7 @@ END
 					fi
 
 				done
+				rm ${path}/Biblioteca/Redes/cache-rede.txt
 				echo -e "\nReiniciando Testes..."
 		 		sleep 5
 			  done

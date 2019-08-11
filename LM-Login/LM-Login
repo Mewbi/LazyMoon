@@ -129,23 +129,23 @@ opcao=$(dialog \
 case $opcao in
 
    LM-MRI)
-   bash ${caminho}LM-MRI/LM-MRI ${usr}
+   xterm -e  ${caminho}LM-MRI/LM-MRI ${usr} &
    ;;
 
    LM-CService)
-   bash ${caminho}LM-CService/CentralConf.sh
+   xterm -e  ${caminho}LM-CService/CentralConf.sh &
    ;;
 
    LM-NetChat)
-   bash ${caminho}LM-NetChat/LM-NetChat
+   xterm -e  ${caminho}LM-NetChat/LM-NetChat &
    ;;
 
    LM-SSHost)
-   bash ${caminho}LM-SSHost/LM-SSHost
+   xterm -e ${caminho}LM-SSHost/LM-SSHost &
    ;;
 
    LM-Management)
-   bash ${caminho}LM-Management/LM-Management
+   xterm -e ${caminho}LM-Management/LM-Management &
    ;;
 
    Contato)
