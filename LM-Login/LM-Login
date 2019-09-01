@@ -141,11 +141,11 @@ case $opcao in
    ;;
 
    LM-SSHost)
-   xterm -e ${caminho}LM-SSHost/LM-SSHost &
+   xterm -e ${caminho}LM-SSHost/LM-SSHost ${usr} &
    ;;
 
    LM-Management)
-   xterm -e ${caminho}LM-Management/LM-Management &
+   xterm -e ${caminho}LM-Management/LM-Management ${usr} &
    ;;
 
    Contato)

@@ -31,10 +31,15 @@
 #Verificar se o SSH está instalado
 inst_ssh=$(type -P ssh)
    if [ ! -n "$inst_ssh" ] ; then
-      echo -e "\tDialog não está instalado...
+      echo -e "\tSSH não está instalado...
 \tInstale-o primeiramente para o programa funcionar"
 	  exit
    fi
+#============================================================================|
+
+#==============================[ Variáveis ]=================================|
+usr="$1"
+path="/home/${usr}/LazyMoon"
 #============================================================================|
 
 #==============================[ FUNÇÕES ]===================================|
@@ -71,6 +76,9 @@ less << END
 
  -d|--desativar)
    Desativa o SSH no computador.
+
+ -e|--enviar)
+   Envia arquivos do "Repositório" para uma máquina na rede LAN.
 
  -s|--sair)
    Sai do programa.
@@ -212,6 +220,49 @@ while : ; do
 		&& echo "SSH desativado com sucesso" \
 		|| echo "Erro em desativar o SSH" ;;
 
+
+		-e|--enviar)
+		#Envia um arquivo do Repositório para uma máquina da rede LAN
+		echo -e "\nArquivos para envio: \n"
+		printf '%s\n' ${path}/Biblioteca/Repositorio/* | grep -n ^ | cut -d/ -f 1,7 | tr / ' '
+		read -p "Escolha qual arquivo será enviado: " enviar
+		enviar=$(printf '%s\n' /home/felipe/LazyMoon/Biblioteca/Repositorio/* | grep -n ^ | cut -d/ -f 1,7 | tr / ' ' | grep ^2 | cut -d\  -f 2)
+			if [ ! -n "$enviar" ]; then
+				echo -e "Nenhum arquivo válido foi selecionado\nFinalizando operação..."
+			else
+				while : ; do
+					read -p "Digite o nome da máquina que será enviado o arquivo: " user
+					read -p "Digite o IP da máquina que será enviado o arquivo: " ip
+					read -p "Digite o diretório da máquina que será enviado o arquivo: " dir
+					clear
+					cat << END
+
+	Confirmação
+
+Arquivo que será enviado: ${enviar}
+Usuário que será enviado: ${user}
+Diretório que será enviado: ${dir}
+IP que será enviado: ${ip}
+
+As informações estão corretas? [s/n]
+END
+					read confirm
+					confirm=${confirm,,}
+					if [ "$confirm" != "s" ]; then
+						echo -e "\nDigite novamentes as informações...\n"
+					else
+						break
+					fi
+				done
+
+				enviar=$(printf '%s\n' /home/felipe/LazyMoon/Biblioteca/Repositorio/* | grep "${enviar}")
+
+				scp ${enviar} ${user}@${ip}:${dir} \
+				&& echo -e "\nEnvio realizado com sucesso" \
+				|| echo -e "\nFalha no envio"
+				read -p "Pressione ENTER parar prosseguir"
+			fi
+		;;
 
 		-s|--sair)
 		break ;;
