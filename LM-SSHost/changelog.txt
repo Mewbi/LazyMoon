@@ -1,9 +1,0 @@
-# Changes
-
-## 1 (02/06/2019 12:22) - [ Felipe Fernandes ]
-1. Criado estrutura funcional do programa;
-2. Adicionado estrutura de teste de existência do SSH na máquina;
-3. Adicionado a conexão via LAN;
-4. Adicionado a conxeão via WAN;
-5. Adiciona a função de ativar o SSH;
-6. Adiciona a função de desativar o SSH.
