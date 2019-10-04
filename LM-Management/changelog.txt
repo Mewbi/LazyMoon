@@ -1,0 +1,19 @@
+# Changes
+
+## 1 (18/05/2019 14:22) - [ Felipe Fernandes ]
+1. Criado estrutura funcional do programa;
+2. Criado a opção de se registrar com criptografia;
+3. Criado opção que inicia o programa de login (LM-Login).
+
+## 2 (25/05/2019 12:52) - [ Felipe Fernandes ]
+1. Criado a opção 'help';
+2. Criado o logo para o programa;
+3. Criado o manual de funcionamento;
+4. Criado a opção de checagem de usuários.
+
+## 3 (25/05/2019 22:47) - [ Felipe Fernandes ]
+1. Criado a função de deletar usuários;
+2. Correção de erro no registro que impedia que pudesse ser completado.
+
+## 4 (01/06/2019 16:41) - [ Felipe Fernandes ]
+1. Ajustado o local de acesso ao banco de logins.

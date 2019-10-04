@@ -1,0 +1,278 @@
+#!/usr/bin/env bash
+
+#==============================[ CABEÇALHO ]=================================|
+#  AUTOR
+#     Felipe Fernandes <felipefernandesgsc@gmail.com>
+#
+#  PROGRAMA
+#     LM-SSHost
+#
+#  DATA DE CRIAÇÃO
+#     02/06/2019
+#
+#  DESCRIÇÃO
+#     Realiza a conexão via SSH com outras máquinas dentro e fora da rede LAN.
+#
+#  FUNCIONAMENTO
+#     A conexão é feita  utilizando o protocolo  SSH junto com a opção -X para
+#   que possa ser  executado programas que  utilizam interface  gráfica, sendo
+#   passado tal interface  para o usuário que realiza a conexão. A conexão LAN
+#   necessita apenas o usuário e o IP da  máquina de acesso, enquanto para fa-
+#   zer a conexão WAN necessita o IP externo da rede, o usuário e a porta (ex-
+#   terna) do roteador que será feita  a conexão. Além disso é possível ativar
+#   e desativar o SSH no computador.
+#
+#  CHANGELOG
+#     https://github.com/Mewbi/tcc-senai/blob/master/LM-SSHost/changelog.txt
+#
+#============================================================================|
+
+#==============================[ TESTES ]====================================|
+#Verificar se o SSH está instalado
+inst_ssh=$(type -P ssh)
+   if [ ! -n "$inst_ssh" ] ; then
+      echo -e "\tSSH não está instalado...
+\tInstale-o primeiramente para o programa funcionar"
+	  exit
+   fi
+#============================================================================|
+
+#==============================[ Variáveis ]=================================|
+usr="$1"
+path="/home/${usr}/LazyMoon"
+#============================================================================|
+
+#==============================[ FUNÇÕES ]===================================|
+_LOGO()
+{
+clear
+cat << END
+╔═╗╔═╗╦ ╦╔═╗╔═╗╔╦╗	|		  | 
+╚═╗╚═╗╠═╣║ ║╚═╗ ║ 	|    Bem-Vindo    | -h ou --help para ver as opções
+╚═╝╚═╝╩ ╩╚═╝╚═╝ ╩ 	|		  |
+=============================================================================
+
+END
+}
+
+_HELP()
+{
+less << END
+
+ -h|--help)
+   Impreme esta lista de comandos.
+
+ -m|--manual)
+   Imprime o manual de funcionamento do programa.
+
+ -l|--lan)
+   Realiza a conexão via SSH na rede LAN.
+
+ -w|--wan)
+   Realiza a conexão via SSH pela rede WAN.
+
+ -a|--ativar)
+   Ativa o SSH no computador.
+
+ -d|--desativar)
+   Desativa o SSH no computador.
+
+ -e|--enviar)
+   Envia arquivos do "Repositório" para uma máquina na rede LAN.
+
+ -s|--sair)
+   Sai do programa.
+
+END
+}
+
+_MANUAL()
+{
+less << END
+
+	Funcionamento
+
+	A conexão é feita  utilizando o protocolo  SSH junto com a opção -X para
+  que possa ser  executado programas que  utilizam interface  gráfica, sendo
+  passado tal interface  para o usuário que realiza a conexão. A conexão LAN
+  necessita apenas o usuário e o IP da  máquina de acesso, enquanto para fa-
+  zer a conexão WAN necessita o IP externo da rede, o usuário e a porta (ex-
+  terna) do roteador que será feita  a conexão. Além disso é possível ativar
+  e desativar o SSH no computador.
+
+  	Conexão WAN
+   É necessário  fazer algumas  configurações no roteador que receberá a re-
+  quisição  de acesso. Nele  é necessário  fazer a redistribuição de portas, 
+  para  isso é necessário  escolher uma porta externa (que será utilizada na
+  hora da conexão), escolher para direcionar para a porta 22 da rede interna
+  e direcionar  para qual  IP interno  que a conexão  será direcionada. Além 
+  disso é necessário permitir que qualquer tipo de protocolo seja aceito.
+
+ 	Ativação e Desativação do SSH
+
+   Tanto a ativação quanto a desativação do protocolo é feita com o seguinte
+  comando /etc/init.d/ssh.
+
+END
+}
+
+_LAN_CONECTA()
+{
+while : ; do
+   read -p "Digite qual o usuário será acessado: " user
+   read -p "Digite o IP do host que será acessado: " ip
+   clear
+   cat << END
+
+	 Confirmação
+
+   Usuário: ${user}
+   Host: ${ip}
+   
+   As informações estão corretas? [s/n]
+END
+   read confirm
+       case $confirm in
+	      s|S|sim|SIM)
+	      break ;;
+	      n|N|nao|NAO)
+	      continue ; clear ;;
+	      *)
+	      echo -e "Opção inválida \nRepetindo..." ; sleep 3 ; clear
+	      continue ;;
+	   esac
+done
+
+#Realiza a conexão propriamente dita
+ssh -X ${user}@${ip} || echo "Erro em realizar a conexão."
+}
+
+WAN_CONECTA()
+{
+while : ; do
+   read -p "Digite qual o usuário será acessado: " user
+   read -p "Digite o IP do host externo que será acessado: " ip
+   read -p "Digite a porta externa de acesso: " porta
+   clear
+   cat << END
+
+	 Confirmação
+
+   Usuário: ${user}
+   Host: ${ip}
+   Porta: ${porta}
+   
+   As informações estão corretas? [s/n]
+END
+   read confirm
+       case $confirm in
+	      s|S|sim|SIM)
+	      break ;;
+	      n|N|nao|NAO)
+	      continue ; clear ;;
+	      *)
+	      echo -e "Opção inválida \nRepetindo..." ; sleep 3 ; clear
+	      continue ;;
+	   esac
+done
+
+#Realiza a conexão propriamente dita
+ssh -X -p ${porta} ${user}@${ip} || echo "Erro em realizar a conexão."
+}
+#============================================================================|
+
+#==============================[ INICIAL ]===================================|
+while : ; do
+	_LOGO
+	read -p "Digite um comando para executar uma tarefa: " tarefa
+		case $tarefa in
+
+		-h|--help)
+		#Imprime a lista de comandos disponíveis.
+		_HELP ; ;;
+
+
+		-m|--manual)
+		#Imprime o manual de funcionamento do programa.
+		_MANUAL ;;
+
+
+		-l|--lan)
+		#Realiza a conexão na rede LAN
+		_LAN_CONECTA ; clear ;;
+
+
+		-w|--wan)
+		#Realiza a conexão pela 'internet'
+		_WAN_CONECTA ; clear ;;
+
+
+		-a|--ativar)
+		#Ativa o ssh no pc
+		/etc/init.d/ssh restart \
+		&& echo "SSH ativado com sucesso" \
+		|| echo "Erro em ativar o SSH" ;;
+
+
+		-d|--desativar)
+		#Desativa o ssh no pc
+		/etc/init.d/ssh stop \
+		&& echo "SSH desativado com sucesso" \
+		|| echo "Erro em desativar o SSH" ;;
+
+
+		-e|--enviar)
+		#Envia um arquivo do Repositório para uma máquina da rede LAN
+		echo -e "\nArquivos para envio: \n"
+		printf '%s\n' ${path}/Biblioteca/Repositorio/* | grep -n ^ | cut -d/ -f 1,7 | tr / ' '
+		read -p "Escolha qual arquivo será enviado: " enviar
+		enviar=$(printf '%s\n' /home/felipe/LazyMoon/Biblioteca/Repositorio/* | grep -n ^ | cut -d/ -f 1,7 | tr / ' ' | grep ^2 | cut -d\  -f 2)
+			if [ ! -n "$enviar" ]; then
+				echo -e "Nenhum arquivo válido foi selecionado\nFinalizando operação..."
+			else
+				while : ; do
+					read -p "Digite o nome da máquina que será enviado o arquivo: " user
+					read -p "Digite o IP da máquina que será enviado o arquivo: " ip
+					read -p "Digite o diretório da máquina que será enviado o arquivo: " dir
+					clear
+					cat << END
+
+	Confirmação
+
+Arquivo que será enviado: ${enviar}
+Usuário que será enviado: ${user}
+Diretório que será enviado: ${dir}
+IP que será enviado: ${ip}
+
+As informações estão corretas? [s/n]
+END
+					read confirm
+					confirm=${confirm,,}
+					if [ "$confirm" != "s" ]; then
+						echo -e "\nDigite novamentes as informações...\n"
+					else
+						break
+					fi
+				done
+
+				enviar=$(printf '%s\n' /home/felipe/LazyMoon/Biblioteca/Repositorio/* | grep "${enviar}")
+
+				scp ${enviar} ${user}@${ip}:${dir} \
+				&& echo -e "\nEnvio realizado com sucesso" \
+				|| echo -e "\nFalha no envio"
+				read -p "Pressione ENTER parar prosseguir"
+			fi
+		;;
+
+		-s|--sair)
+		break ;;
+
+
+		*)
+		echo -e "\nOpção inválida. Digite -h ou --help para ver as opções disponíveis.\n"
+		sleep 3 ;;
+
+		esac
+	
+done
+#============================================================================|

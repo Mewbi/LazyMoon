@@ -1,0 +1,17 @@
+
+	Server: casa
+
+----------Informações de Hardware e Software----------
+Distribuição: ubuntu
+Nome do Kernel: Linux
+Arquitetura do Hardware: x86_64
+Modelo do Processador:  Intel(R) Core(TM) i3-2310M CPU @ 2.10GHz
+Memória RAM: 3892.02MB
+
+-------------------Uso de Hardware--------------------
+Ligado as:  17:11:55 Tempo Ligado  5:45 h
+Uso da CPU: 10,8%
+Memória RAM livre para uso: 1316.53MB
+
+	 Sist. Arq.      Tam. Usado Disp. Uso% Montado em
+HDs: /dev/sda1       314G  118G  181G  40% /
