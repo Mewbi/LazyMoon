@@ -59,7 +59,7 @@ case $opcao in
    Contato)
    dialog \
    --stdout --title "E-mail para contato" \
-   --msgbox "\nFelipe Fernandes \n felipefernandesgsc@gmail.com \n\n\
+   --msgbox "\nFelipe Fernandes \n  felipefernandesgsc@gmail.com \n\n\
 Gabriel Viana \n  4463gabrielviana@gmail.com" 11 40
    ;;
 

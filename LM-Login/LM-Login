@@ -129,15 +129,15 @@ opcao=$(dialog \
 case $opcao in
 
    LM-MRI)
-   xterm -e  ${caminho}LM-MRI/LM-MRI ${usr} &
+   xterm -e ${caminho}LM-MRI/LM-MRI ${usr} &
    ;;
 
    LM-CService)
-   xterm -e  ${caminho}LM-CService/CentralConf.sh &
+   xterm -e ${caminho}LM-CService/LM-CService &
    ;;
 
    LM-NetChat)
-   xterm -e  ${caminho}LM-NetChat/LM-NetChat &
+   xterm -e ${caminho}LM-NetChat/LM-NetChat &
    ;;
 
    LM-SSHost)
@@ -151,7 +151,8 @@ case $opcao in
    Contato)
    dialog \
    --stdout --title "E-mail para contato" \
-   --msgbox "felipefernandesgsc@gmail.com" 5 40
+   --msgbox "\nFelipe Fernandes \n  felipefernandesgsc@gmail.com \n\n\
+Gabriel Viana \n  4463gabrielviana@gmail.com" 11 40
    ;;
 
    Sair)
