@@ -1,4 +1,4 @@
-# MRI <img src='https://https://i.imgur.com/2uUwdD3.png' height='300'>
+# MRI <img src='https://i.imgur.com/2uUwdD3.png' height='300'>
 Sistema de monitoramento de hosts dentro de uma rede LAN.
 
 ## Data de Criação
