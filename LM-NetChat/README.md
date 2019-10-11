@@ -12,6 +12,9 @@ o IP do criador e qual a porta que foi escolhida para a comunicação).
 O programa utiliza o Netcat para realizar a troca de informações entre os usuários, por tal 
 motivo o programa chama-se NetChat, sendo um trocadilho com a maneira que ele funciona.
 
+## Opções
+
+
 ## Changelog
 https://github.com/Mewbi/tcc-senai/blob/master/LM-NetChat/changelog.txt
 
