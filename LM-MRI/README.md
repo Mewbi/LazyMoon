@@ -1,8 +1,8 @@
-# MRI <img src='https://i.imgur.com/uwou5Ab.png' align='right' height='300'>
+# MRI <img src='https://https://i.imgur.com/2uUwdD3.png' height='300'>
 Sistema de monitoramento de hosts dentro de uma rede LAN.
 
 ## Data de Criação
-31/12/2018
+15/02/2019
 
 ## Funcionamento
  Realiza o monitoramento de equipamentos da rede por meio do comando ping.
@@ -45,4 +45,5 @@ https://github.com/Mewbi/tcc-senai/blob/master/LM-NetChat/changelog.txt
 
 ## Autor
 Felipe Fernandes [ felipefernandesgsc@gmail.com ]
+Gabriel Viana [ 4463gabriel@gmail.com ]
 
