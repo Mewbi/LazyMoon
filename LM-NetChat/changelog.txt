@@ -14,3 +14,6 @@
 
 ## 3 (11/01/2019) - [ Felipe Fernandes ]
 1. Adicionado a função de ter um nome (nickname) no chat.
+
+## 4 (11/10/2019) - [ Felipe Santana ]
+1. Adicionada documentação.
