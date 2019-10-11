@@ -30,7 +30,6 @@ opcao=$(dialog \
 	WEB 'APACHE' \
 	DNS 'Bind' \
 	DHCP 'ISC DHCP Server' \
-	VOIP 'Asterix' \
 	FTP 'vsFTPd' \
 	Contato 'Entrar em Contato com Suporte' \
 	Sair 'Sair do Programa' \
