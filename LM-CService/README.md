@@ -16,15 +16,15 @@ Configura o serviço de distribuiçaõ de IPs
 06/10/2019
 
 ## Opções
-Instalar 'Isc-DHCP-Server' 
+Instalar: Isc-DHCP-Server 
 
-Configurar 'Configura DHCP (Escopo)' 
+Configurar: Configura DHCP (Escopo) 
 
-Ativar 'Ativa o serviço DHCP' 
+Ativar: Ativa o serviço DHCP 
 
-Desativar 'Desativa o serviço DHCP' 
+Desativar: Desativa o serviço DHCP 
 
-Sair 'Sai do Programa' 
+Sair: Sai do Programa 
 
 ## Changelog
 https://github.com/Mewbi/tcc-senai/blob/master/LM-CService/changelog.txt
