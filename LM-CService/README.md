@@ -16,7 +16,7 @@ Configura o serviço de distribuiçaõ de IPs
 06/10/2019
 
 ## Opções
-Instalar: Isc-DHCP-Server 
+Instalar: Instala o Isc-DHCP-Server 
 
 Configurar: Configura DHCP (Escopo) 
 
