@@ -52,7 +52,7 @@ _HELP()
 less << END
 
  -h|--help)
-   Impreme esta lista de comandos.
+   Imprime esta lista de comandos.
 
  -m|--manual)
    Imprime o manual de funcionamento do programa.
