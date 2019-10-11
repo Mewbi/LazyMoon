@@ -1,4 +1,4 @@
-# LM-NetChat <https://imgur.com/a/BbLL1oK' align='right' height='300'>
+# LM-NetChat <https://imgur.com/vvehTQT' align='right' height='300'>
 Sistema de comunicação por chat entre dois hosts dentro de uma rede LAN via terminal.
 
 ## Data de Criação
@@ -17,3 +17,5 @@ https://github.com/Mewbi/tcc-senai/blob/master/LM-NetChat/changelog.txt
 
 ## Autor
 Felipe Fernandes [ felipefernandesgsc@gmail.com ]
+
+https://imgur.com/vvehTQT
