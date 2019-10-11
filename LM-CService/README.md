@@ -10,7 +10,7 @@ Central de acesso aos programas de configuração de serviços.
 O programa apresenta um menu onde o usuário escolhe qual serviço deseja configurar.
 
 # DHCP
-Configura o serviço de distribuiçaõ de IPs
+Configura o serviço de distribuiçaõ de IPs.
 
 ## Data de Criação
 06/10/2019
@@ -26,6 +26,30 @@ Desativar: Desativa o serviço DHCP
 
 Sair: Sai do Programa 
 
+# FTP
+Configura o serviço de transferência de arquivos.
+
+## Data de Criação
+06/10/2019
+
+## Opções
+
+Instalar: Instala o vsFTPd
+
+Configurar: Configura FTP
+   
+Ativar: Ativa o serviço FTP
+   
+Desativar: Desativa o serviço FTP
+   
+Grupo: Cria um novo grupo
+   
+Usuario: Cria um novo usuário
+   
+Adicionar: Adiciona usuário a um grupo existente
+   
+Sair: Sair do Programa
+   
 ## Changelog
 https://github.com/Mewbi/tcc-senai/blob/master/LM-CService/changelog.txt
 
