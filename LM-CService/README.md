@@ -9,6 +9,23 @@ Central de acesso aos programas de configuração de serviços.
    
 O programa apresenta um menu onde o usuário escolhe qual serviço deseja configurar.
 
+# DHCP
+Configura o serviço de distribuiçaõ de IPs
+
+## Data de Criação
+06/10/2019
+
+## Opções
+Instalar 'Isc-DHCP-Server' 
+
+Configurar 'Configura DHCP (Escopo)' 
+
+Ativar 'Ativa o serviço DHCP' 
+
+Desativar 'Desativa o serviço DHCP' 
+
+Sair 'Sai do Programa' 
+
 ## Changelog
 https://github.com/Mewbi/tcc-senai/blob/master/LM-CService/changelog.txt
 
