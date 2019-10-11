@@ -32,4 +32,4 @@ https://github.com/Mewbi/tcc-senai/blob/master/LM-NetChat/changelog.txt
 ## Autor
 Felipe Fernandes [ felipefernandesgsc@gmail.com ]
 
-https://imgur.com/vvehTQT
+
