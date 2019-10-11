@@ -13,7 +13,18 @@ O programa utiliza o Netcat para realizar a troca de informações entre os usu�
 motivo o programa chama-se NetChat, sendo um trocadilho com a maneira que ele funciona.
 
 ## Opções
-
+```
+-h|--help
+    Imprime esta lista de comandos.
+ -m|--manual
+    Imprime o manual de funcionamento do programa.
+ -r|--hostear
+    Cria um chat.
+ -c|--conectar
+    Se conecta a um chat existente.
+ -s|--sair
+    Sai do programa.
+```
 
 ## Changelog
 https://github.com/Mewbi/tcc-senai/blob/master/LM-NetChat/changelog.txt
