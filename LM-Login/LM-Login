@@ -116,7 +116,7 @@ opcao=$(dialog \
 	--menu 'Selecione uma Opção' \
 	0 0 0 \
 	LM-MRI 'Acessar Monitoramento' \
-	LM-CSerivce 'Acessar Central de Configurações de Serviços' \
+	LM-CService 'Acessar Central de Configurações de Serviços' \
 	LM-NetChat 'Acessar Chat de Suporte' \
 	LM-SSHost 'Realizar Acesso a Outras Máquinas' \
 	LM-Management 'Acessar Gerenciamento de Usuários' \
@@ -133,7 +133,7 @@ case $opcao in
    ;;
 
    LM-CService)
-   xterm -e ${caminho}LM-CService/LM-CService &
+   xterm -e ${caminho}LM-CService/LM-CService ${usr} &
    ;;
 
    LM-NetChat)
