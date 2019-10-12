@@ -102,7 +102,7 @@ case $opcao in
             Você quer configurar a Zona Reversa?\n\n" 0 0
    	)
 
-   		if [ reversa == 0 ]; then
+   		if [ reversa -eq 0 ]; then
 
    			#Particionando os IP
    			ip-a=$(echo "$ipdom" | cut -d. -f1)
