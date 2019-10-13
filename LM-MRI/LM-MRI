@@ -55,7 +55,7 @@ if [ ! -n "$cor" ]
 			source ${path}/LM-MRI/config.txt
 		fi
 	echo -e "\nAs configurações podem ser alteradas no arquivo '${path}/LM-MRI/config.txt'"
-	sleep 3
+	sleep 2
 fi
 
 #Ativando cores
