@@ -18,7 +18,7 @@
 #  FUNCIONAMENTO
 #	  É feito o teste (com ping) nos equipamentos registrados no arquivo de
 #   registros, com base no retorno do comando será apresentado ao usuário se
-#   há ou não conexão com tal dispotivo(s) testado(s).
+#   há ou não conexão com tal(is) dispotivo(s) testado(s).
 #
 #============================================================================|
 
