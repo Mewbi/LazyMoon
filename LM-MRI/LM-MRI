@@ -73,9 +73,9 @@ _LOGO()
 {
 clear
 cat << END
-╔╦╗╔═╗╔╗╔  ╦  ╔═╗╔╗╔	|			|	   Digite:
-║║║║ ║║║║  ║  ╠═╣║║║	|	Bem-Vindo	|	-h ou --help 
-╩ ╩╚═╝╝╚╝  ╩═╝╩ ╩╝╚╝	|			|   para acessar as opções
+	╔╦╗╦═╗╦		|			|	   Digite:
+	║║║╠╦╝║		|	Bem-Vindo	|	-h ou --help 
+	╩ ╩╩╚═╩		|			|   para acessar as opções
 =============================================================================
 END
 }
@@ -83,36 +83,49 @@ _HELP()
 {
 less << END
 	Opções
+
  -h|--help)
 	Imprime este menu de opções.
 
+
  -r|--registrar)
  	Registra um dispositivo.
+
  -d|--deletar)
  	Deleta um dispositvo do registro.
 	
  -c|--checar)
 	Imprime na tela os dispositivos registrados.
+
  -m|--monitorar)
  	Inicia o monitoramento dos dispositivos registrados.
+
  -v|--vasculhar)
  	Realiza o vasculhamento de IPs ativos na rede.
 	
+
  -rr|--registrar-rede)
  	Registra uma rede.
+
  -dr|--deletar-rede)
  	Deleta uma rede do registro de redes.
+
  -cr|--checar-rede)
  	Imprime na tela as redes registradas.
+
  -mr|--monitorar-rede)
  	Inicia o monitoramentos da rede selecionada.
 
+
  -rp|--registrar-prioritario)
- 	Registra um dispostivo para ser monitorado e receber notificações sobre no Telegram
+ 	Registra um dispostivo para ser monitorado e receber notificações sobre no Telegram.
+
  -rb|--registro-bot)
- 	Registra um BOT do Telegram para enviar notificações
+ 	Registra um BOT do Telegram para enviar notificações.
+
  -mp|--monitorar-prioritario)
- 	Monitora os prioritarios e envia notificações
+ 	Monitora os prioritarios e envia notificações.
+
 
  -s|--sair)
 	Sai do programa.
