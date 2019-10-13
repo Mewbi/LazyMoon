@@ -26,7 +26,10 @@
 usr="$1"
 path="/home/${usr}/LazyMoon"
 source ${path}/LM-MRI/config.txt 2> /dev/null || cor=""
-#================================================
+#========================================Diretorios==========================|
+
+mkdir ${path}/Biblioteca/monitoramentoPrioritarios
+
 
 #==========================================TESTES
 #Teste existencia pasta registro
@@ -79,42 +82,40 @@ END
 _HELP()
 {
 less << END
-
 	Opções
-
  -h|--help)
 	Imprime este menu de opções.
 
  -r|--registrar)
  	Registra um dispositivo.
-  
  -d|--deletar)
  	Deleta um dispositvo do registro.
 	
  -c|--checar)
 	Imprime na tela os dispositivos registrados.
-
  -m|--monitorar)
  	Inicia o monitoramento dos dispositivos registrados.
-
  -v|--vasculhar)
  	Realiza o vasculhamento de IPs ativos na rede.
 	
  -rr|--registrar-rede)
  	Registra uma rede.
-
  -dr|--deletar-rede)
  	Deleta uma rede do registro de redes.
-
  -cr|--checar-rede)
  	Imprime na tela as redes registradas.
-
  -mr|--monitorar-rede)
  	Inicia o monitoramentos da rede selecionada.
 
+ -rp|--registrar-prioritario)
+ 	Registra um dispostivo para ser monitorado e receber notificações sobre no Telegram
+ -rb|--registro-bot)
+ 	Registra um BOT do Telegram para enviar notificações
+ -mp|--monitorar-prioritario)
+ 	Monitora os prioritarios e envia notificações
+
  -s|--sair)
 	Sai do programa.
-
 END
 }
 #================================================
@@ -400,7 +401,119 @@ END
 		 		sleep 5
 			  done
 		  ;;
+
+		  -rb|--registro-bot)
+			#Confirmação da existencia do BOT
+			echo -e "Para essa função é necessário que já tenha sido criado um ${verde}BOT${corpadrao} no BotFather do ${ciano}TELEGRAM${corpadrao}!\nAlém do BOT deve-se ter o ${ciano}ID${corpadrao} de um chat[grupo/user]\nDeseja prosseguir?[s/n]"
+			read prosseguir
+
+				if [ "${prosseguir}" = "s" ]; then
+
+					until [ "$confirmBOT" = "s" ] ; do
+						echo -e "Digite o API do BOT que será utilizado:"
+						read api_BOT
+						echo -e "Digite o ID do chat que será utilizado:"
+						read id_CHAT
+						echo -e "CONFIRMAÇÃO:\n API do BOT - ${ciano}${api_BOT}${corpadrao}\n O ID do chat - ${ciano}${id_CHAT}${corpadrao}\n As informações estão corretas?![s/n]"
+						read confirmBOT
+					done
+					#Registra e Confirma o Reegistro
+					echo -e "BOT+${api_BOT}+CHAT+${id_CHAT}" >> ${path}/Biblioteca/monitoramentoPrioritarios/BOT && echo -e "${ciano}BOT${corpadrao} registrado com SUCESSO!"
+
+				fi
+
+			
+		  ;;
+
+		  -rp|--registrar-prioritario)
+			
+			#Entra em Confirmação das informações
+			_LOGO
+			echo -e "${ciano}Registro de prioritarios${corpadrao}"
+		    until [ "$confirmacao" = "s" ] ; do		#Confirmar as informações
+			  echo
+		  	  read -p "Digite o nome do dispositivo que será registrado como prioritario: " nome
+			  nome=$(echo $nome | tr -t \  _) #Substitui os espaços por _
+		      read -p "Digite o IP do dispositivo que será registrado: " ip		 
+			  echo -e "\n${vermelho}Confirmação${corpadrao} \nO nome será ${ciano}${nome}${corpadrao} e o IP será ${ciano}${ip}${corpadrao}\n"
+			  echo "As informações estão corretas? [s/n]"
+			  read confirmacao	  
+			done
+			echo "nome:${nome}:IP:${ip}" >> ${path}/Biblioteca/monitoramentoPrioritarios/prioritarios.txt && echo -e "\nRegistro realizado com sucesso. Digite a próxima tarefa: \n"
+			confirmacao=""
+			
+		  ;;
+
+		  -mp|--monitorar-prioritario)
+
+		  while : #Entra em um loop que faz o teste completo infinitas vezes
+		  do
+		  echo -e "${ciano}Monitorando${corpadrao}" > ${path}/Biblioteca/Redes/cache2.txt #Esvazia o cache. Pode ser usado um rm também
+
+		  linhas_prio=$(wc -l ${path}/Biblioteca/monitoramentoPrioritarios/prioritarios.txt | cut -d\  -f 1) #Retira quantas linhas tem o arquivo de registro
+		  loop_prio="1"
+			until [ "$loop_prio" -gt "$linhas_prio" ]
+			  do
+			  #Retira apenas o nome do dispositivo e seu IP para fazer o teste
+			  nome_prio=$(cat ${path}/Biblioteca/monitoramentoPrioritarios/prioritarios.txt | grep -n ^| grep ^${loop_prio}: | cut -d: -f 3)
+			  ip_prio=$(cat ${path}/Biblioteca/monitoramentoPrioritarios/prioritarios.txt | grep -n ^| grep ^${loop_prio}: | cut -d: -f 5)
+			  #Realiza o teste de conexão e coloca o resultado no cache
+			  ping -c 2 -W 1 ${ip_prio} 1> /dev/null 2> /dev/null && \
+			  echo -e "Dispositivo:${ciano}${nome_prio}${corpadrao} Status:${verde}Conectado${corpadrao}" \
+			  >> ${path}/Biblioteca/Redes/cache2.txt || \
+			  echo -e "Dispositivo:${ciano}${nome_prio}${corpadrao} Status:${vermelho}Sem-Conexão${corpadrao}" \
+			  >> ${path}/Biblioteca/Redes/cache2.txt
+			  sleep 1
+
+			  ping -c 2 -W 1 ${ip_prio} 1> /dev/null 2> /dev/null && \
+			  echo -e "nome:${nome_prio}:estado:0" > ${path}/Biblioteca/Redes/cache${nome_prio}A.txt \
+			  || \
+			  echo -e "nome:${nome_prio}:estado:1" \
+			  > ${path}/Biblioteca/Redes/cache${nome_prio}A.txt 
+
+			  #Variaveis para comparação
+			  conf=$(cat ${path}/Biblioteca/Redes/cache${nome_prio}A.txt | cut -d: -f 4)
+			  confB=$(cat ${path}/Biblioteca/Redes/cache${nome_prio}B.txt  | cut -d: -f 4)
+
+			  #mensagens
+			  desconectou="${nome_prio} - FOI DESCONECTADO"
+			  conectou="${nome_prio} - FOI CONECTADO"
+
+			  #ID do Chat e BOT
+			  bot=$(cat ${path}/Biblioteca/monitoramentoPrioritarios/BOT | cut -d+ -f2)
+			  chat=$(cat ${path}/Biblioteca/monitoramentoPrioritarios/BOT | cut -d+ -f4)
+
+			  	#Comparação com estados para envio de notificação
+			  	if [ $conf == 1 ] && [ $confB == 0 ];then
+			  		curl "https://api.telegram.org/bot${bot}/sendMessage?chat_id=${chat}&text=${desconectou}!"
+			  	fi
+			  	if [ $conf == 0 ] && [ $confB == 1 ];then
+			  		curl "https://api.telegram.org/bot${bot}/sendMessage?chat_id=${chat}&text=${conectou}!"
+			  	fi
+
+			  sleep 5
+
+			  #Salva o ultimo estado para não causar SPAM
+			  ping -c 2 -W 1 ${ip_prio} 1> /dev/null 2> /dev/null && \
+			  echo -e "nome:${nome_prio}:estado:0" > ${path}/Biblioteca/Redes/cache${nome_prio}B.txt \
+			  || \
+			  echo -e "nome:${nome_prio}:estado:1" \
+			  > ${path}/Biblioteca/Redes/cache${nome_prio}B.txt
+
+			  #Imprime na tela as informações do cache
+			  _LOGO ; cat ${path}/Biblioteca/Redes/cache2.txt | column -t
+			  eval "loop_prio=\$((loop_prio + 1))"
+			  done
+
+			 
+		  rm ${path}/Biblioteca/Redes/cache2.txt
 		  
+		  echo -e "\nReiniciando Testes..."
+		  sleep 10
+		  done
+
+		  ;;
+
 		  *)
 		  echo -e "\nOpção inválida. Digite -h ou --help para ver as opções válidas.\n"
 		  ;;
@@ -409,4 +522,3 @@ END
 	  
 	  read tarefa
 	  done
-#================================================
