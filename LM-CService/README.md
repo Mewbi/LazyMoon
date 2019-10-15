@@ -49,6 +49,22 @@ Usuario: Cria um novo usuário
 Adicionar: Adiciona usuário a um grupo existente
    
 Sair: Sair do Programa
+
+# DNS
+Configura o serviço de conversão de nomes e IPs
+
+## Data de criação
+12/10/2019
+
+## Opções
+
+Instalar: Instala o Bind9 
+
+Configurar: Configura zonas
+
+Ativar: Ativa/Reincia o serviço
+
+Sair: Sai do programa
    
 ## Changelog
 https://github.com/Mewbi/tcc-senai/blob/master/LM-CService/changelog.txt
