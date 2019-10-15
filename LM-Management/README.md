@@ -1,4 +1,4 @@
-# LM-Management <img src='https://i.imgur.com/U3lwBVc.png' align='right' height='300'>
+# LM-Management <img src='https://i.imgur.com/WYHTub4.png' align='right' height='300'>
 Realiza o gerenciamento  de usuários para o acesso aos serviços de monitoramento de redes.
 
 ## Data de Criação
@@ -10,6 +10,8 @@ Realiza o gerenciamento  de usuários para o acesso aos serviços de monitoramen
 O programa cria e remove usuários que terão acesso aos serviços de monitoramento de redes, como
 também realiza o direcionamento para a sessão de login, para ter acesso a outros programas que 
 realizam a supervisão da(s) rede(s) analisada(s).
+
+<img src='https://i.imgur.com/MZsXOJI.jpg' align='center' height='300'>
 
 ## Opções
 ```
