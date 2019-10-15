@@ -10,6 +10,8 @@ Sistema de monitoramento de hosts dentro de uma rede LAN.
  É feito o teste (com ping) nos equipamentos registrados no arquivo de
  registros, com base no retorno do comando será apresentado ao usuário se
  há ou não conexão com tal dispotivo(s) testado(s).
+ 
+ <img src='https://i.imgur.com/FhghFPv.jpg' align='center' height='300'>
    
 ## Opções
 ```
