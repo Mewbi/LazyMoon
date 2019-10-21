@@ -113,3 +113,4 @@ https://github.com/Mewbi/tcc-senai/blob/master/LM-CService/changelog.txt
 
 ## Autor
 Felipe Fernandes [ felipefernandesgsc@gmail.com ]
+Gabriel Viana [ 4463gabriel@gmail.com ] - DNS
