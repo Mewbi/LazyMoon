@@ -1,8 +1,8 @@
-# TCC-SENAI
-Repositório oficial das versões mais atualizadas dos projetos referentes ao TCC.
+# Lazy Moon
+Repositório oficial das versões mais atualizadas dos projetos referentes ao projeto Lazy Moon.
 
 ## Objetivo
-Desenvolver um sistema de monitoramento dentro da rede LAN que possa ser acessado por redes externas (WAN).
+Desenvolver um sistema de monitoramento e gerenciamento dentro da rede LAN que possa ser acessado por redes externas (WAN).
 
 ## Como
 Criando uma série de programas interligados que realizem as funções de registro, extração de dados, organização, acesso e monitoramento.
